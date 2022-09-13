@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [2.0.3]
-### Uncategorized
-- update entry
+### Changed
+- Update entrypoint for package [#10](https://github.com/MetaMask/scure-bip39/pull/10)
 
-## [2.0.2]
+## [2.0.2] [DEPRECATED]
 ### Changed
 - change build output location to `/dist` [#9](https://github.com/MetaMask/scure-bip39/pull/9)
 
