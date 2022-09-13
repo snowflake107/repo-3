@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.2]
+## [2.0.3]
+### Changed
+- Update entrypoint for package [#10](https://github.com/MetaMask/scure-bip39/pull/10)
+
+## [2.0.2] [DEPRECATED]
 ### Changed
 - change build output location to `/dist` [#9](https://github.com/MetaMask/scure-bip39/pull/9)
 
@@ -18,7 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Apply patches to allow passing mnemonic as a Uint8Array instead of as a string [#1](https://github.com/MetaMask/scure-bip39/pull/1)
 
-[Unreleased]: https://github.com/MetaMask/scure-bip39/compare/v2.0.2...HEAD
+[Unreleased]: https://github.com/MetaMask/scure-bip39/compare/v2.0.3...HEAD
+[2.0.3]: https://github.com/MetaMask/scure-bip39/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/MetaMask/scure-bip39/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/MetaMask/scure-bip39/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/MetaMask/scure-bip39/releases/tag/v2.0.0
