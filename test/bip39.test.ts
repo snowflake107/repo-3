@@ -6,9 +6,9 @@ import {
   mnemonicToSeedSync,
   validateMnemonic,
 } from '../dist';
-import { wordlist as englishWordlist } from '../wordlists/english';
-import { wordlist as japaneseWordlist } from '../wordlists/japanese';
-import { wordlist as spanishWordlist } from '../wordlists/spanish';
+import { wordlist as englishWordlist } from '../dist/wordlists/english';
+import { wordlist as japaneseWordlist } from '../dist/wordlists/japanese';
+import { wordlist as spanishWordlist } from '../dist/wordlists/spanish';
 import { bytesToHex as toHex } from '@noble/hashes/utils';
 import { deepStrictEqual, throws } from './assert';
 
