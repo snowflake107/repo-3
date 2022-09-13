@@ -5,7 +5,7 @@ import {
   mnemonicToSeed,
   mnemonicToSeedSync,
   validateMnemonic,
-} from '..';
+} from '../dist';
 import { wordlist as englishWordlist } from '../wordlists/english';
 import { wordlist as japaneseWordlist } from '../wordlists/japanese';
 import { wordlist as spanishWordlist } from '../wordlists/spanish';
