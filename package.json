@@ -2,7 +2,7 @@
   "name": "@metamask/scure-bip39",
   "version": "2.0.2",
   "description": "MetaMask fork of @scure/bip39: a secure, audited & minimal implementation of BIP39 mnemonic phrases",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "files": [
     "dist/"
   ],
