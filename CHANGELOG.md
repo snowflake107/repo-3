@@ -7,16 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [2.0.2]
-### Uncategorized
-- fix tests
-- fix tests
-- build to dist
+### Changed
+- change build output location to `/dist` [#9](https://github.com/MetaMask/scure-bip39/pull/9)
 
-## [2.0.1]
+## [2.0.1] [DEPRECATED]
 ### Added
 - add publishConfig [#6](https://github.com/MetaMask/scure-bip39/pull/6)
 
-## [2.0.0]
+## [2.0.0] [DEPRECATED]
 ### Changed
 - Apply patches to allow passing mnemonic as a Uint8Array instead of as a string [#1](https://github.com/MetaMask/scure-bip39/pull/1)
 
