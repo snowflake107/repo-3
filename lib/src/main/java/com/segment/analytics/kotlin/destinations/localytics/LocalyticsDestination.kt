@@ -19,7 +19,7 @@ class LocalyticsDestination: DestinationPlugin(), AndroidLifecycle {
     private var hasSupportLibOnClassPath: Boolean = false
     private val LOCALYTICS_FULL_KEY = "Localytics"
     internal var localyticsSettings: LocalyticsSettings? = null
-    var attributeScope: Localytics.ProfileScope? = null
+    internal var attributeScope: Localytics.ProfileScope? = null
     override val key: String = LOCALYTICS_FULL_KEY
 
     override fun update(settings: Settings, type: Plugin.UpdateType) {
