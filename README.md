@@ -15,6 +15,28 @@ Or the following for Kotlin DSL
 implementation("com.segment.analytics.kotlin.destinations:localytics:<latest_version>")
 ```
 
+Also add the Maven Localytics repo (since Localytics doesn’t publish it on Maven Central) in project level build.gradle.
+```
+allprojects {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://maven.localytics.com/public'
+        }
+    }
+}
+```
+Or the following for Kotlin DSL
+```
+allprojects {
+    repositories {
+        mavenCentral()
+        maven {
+            url = uri("https://maven.localytics.com/public")
+        }
+    }
+}
+```
 
 ## Using the Plugin in your App
 
