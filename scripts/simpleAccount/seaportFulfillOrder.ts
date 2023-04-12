@@ -15,7 +15,7 @@ import { parseOpenSeaUrl } from '../../src/opensea.helper';
 import { CNFTBuyer } from '../../src/opensea.helper';
 import { OpenSeaSDK } from 'opensea-js';
 import { sleep } from '../../src/utils';
-import { conduitAddress, executorAddress } from '../../src/consts';
+import { conduitAddress, executorAddress, seaportAddress } from '../../src/consts';
 import { SimpleAccountAPI } from '@account-abstraction/sdk';
 
 const getOffer = async (seaport: OpenSeaSDK, tokenAddress: string, tokenId: string) => {
@@ -97,7 +97,7 @@ export default async function main(
   const owner = await erc721.ownerOf(tokenId);
 
   const allowedForEntryPoint = await erc721.isApprovedForAll(owner, config.entryPoint);
-  const allowedForSeaport = await erc721.isApprovedForAll(owner, config.seaportAddress);
+  const allowedForSeaport = await erc721.isApprovedForAll(owner, seaportAddress);
   const allowedForExecutor = await erc721.isApprovedForAll(owner, executorAddress);
   const allowedForConduit = await erc721.isApprovedForAll(owner, conduitAddress);
 
@@ -121,8 +121,8 @@ export default async function main(
 
     if (!allowedForSeaport) {
       console.log('Approving seaport...');
-      await erc721ApproveForAll(accountAPI, provider, erc721, config.seaportAddress);
-      console.log(`Allowed for seaport: `, await erc721.isApprovedForAll(owner, config.seaportAddress));
+      await erc721ApproveForAll(accountAPI, provider, erc721, seaportAddress);
+      console.log(`Allowed for seaport: `, await erc721.isApprovedForAll(owner, seaportAddress));
     }
 
     if (!allowedForExecutor) {
@@ -141,7 +141,7 @@ export default async function main(
     {
       const parameters = order.protocolData;
 
-      const seaportAbi = new ethers.Contract(config.seaportAddress, SEAPORT_ABI, provider);
+      const seaportAbi = new ethers.Contract(seaportAddress, SEAPORT_ABI, provider);
 
       console.log('Parameters: ', parameters);
 
