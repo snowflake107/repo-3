@@ -3,8 +3,10 @@ import { Command } from "commander";
 import address from "./address";
 import transfer from "./transfer";
 import erc20Transfer from "./erc20Transfer";
+import erc721Transfer from "./erc721Transfer";
 import batchTransfer from "./batchTransfer";
 import batchErc20Transfer from "./batchErc20Transfer";
+import seaportFulfillOrder from "./seaportFulfillOrder";
 
 const program = new Command();
 
@@ -42,6 +44,22 @@ program
   );
 
 program
+  .command("erc721Transfer")
+  .description("Transfer ERC-721 token")
+  .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .requiredOption("-tkn, --token <address>", "The token address")
+  .requiredOption("-id, --tokenId <number>", "Token id to transfer")
+  .requiredOption("-t, --to <address>", "The recipient address")
+  .action(async (opts) =>
+    erc721Transfer(
+      opts.token,
+      opts.tokenId,
+      opts.to,
+      Boolean(opts.withPaymaster)
+    )
+  );
+
+program
   .command("batchTransfer")
   .description("Batch transfer ETH")
   .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
@@ -72,5 +90,17 @@ program
       Boolean(opts.withPaymaster)
     )
   );
+
+program
+  .command("seaportFulfillOrder")
+  .description("Fulfill an OpenSea order")
+  .option("-pm, --withPaymaster", "Use a paymaster for this transaction")
+  .requiredOption("-u, --url <url>", "The order opensea url")
+  .action(async (opts) => {
+    seaportFulfillOrder(
+      opts.url,
+      Boolean(opts.withPaymaster)
+    );
+  });
 
 program.parse();
