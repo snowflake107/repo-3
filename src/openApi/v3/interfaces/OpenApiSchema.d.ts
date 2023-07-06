@@ -26,6 +26,7 @@ export interface OpenApiSchema extends OpenApiReference, WithEnumExtension, Json
     minProperties?: number;
     required?: string[];
     enum?: (string | number)[];
+    const?: any;
     type?: string | string[];
     allOf?: OpenApiSchema[];
     oneOf?: OpenApiSchema[];
