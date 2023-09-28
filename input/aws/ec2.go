@@ -33,11 +33,12 @@ import (
 )
 
 type EC2Instance struct {
-	InstanceID string
-	OwnerID    string
-	SubnetID   string
-	Tags       []types.Tag
-	Metadata   mapstr.M
+	InstanceID   string
+	InstanceName string
+	OwnerID      string
+	SubnetID     string
+	Tags         []types.Tag
+	Metadata     mapstr.M
 }
 
 func collectEC2Assets(ctx context.Context, client ec2.DescribeInstancesAPIClient, region string, log *logp.Logger, publisher stateless.Publisher) error {
@@ -65,6 +66,9 @@ func collectEC2Assets(ctx context.Context, client ec2.DescribeInstancesAPIClient
 		if parents != nil {
 			options = append(options, internal.WithAssetParents(parents))
 		}
+		if instance.InstanceName != "" {
+			options = append(options, internal.WithAssetName(instance.InstanceName))
+		}
 		internal.Publish(publisher, nil,
 			options...,
 		)
@@ -84,9 +88,10 @@ func describeEC2Instances(ctx context.Context, client ec2.DescribeInstancesAPICl
 		for _, reservation := range resp.Reservations {
 			instances = append(instances, util.Map(func(i types.Instance) EC2Instance {
 				inst := EC2Instance{
-					InstanceID: *i.InstanceId,
-					OwnerID:    *reservation.OwnerId,
-					Tags:       i.Tags,
+					InstanceID:   *i.InstanceId,
+					InstanceName: getEC2AssetNameFromTags(i.Tags),
+					OwnerID:      *reservation.OwnerId,
+					Tags:         i.Tags,
 					Metadata: mapstr.M{
 						"state": string(i.State.Name),
 					},
@@ -105,7 +110,19 @@ func describeEC2Instances(ctx context.Context, client ec2.DescribeInstancesAPICl
 func flattenEC2Tags(tags []types.Tag) mapstr.M {
 	out := mapstr.M{}
 	for _, t := range tags {
-		out[*t.Key] = *t.Value
+		//Name is already published as asset.name
+		if *t.Key != "Name" {
+			out[*t.Key] = *t.Value
+		}
 	}
 	return out
+}
+
+func getEC2AssetNameFromTags(tags []types.Tag) string {
+	for _, tag := range tags {
+		if *tag.Key == "Name" {
+			return *tag.Value
+		}
+	}
+	return ""
 }
