@@ -20,14 +20,16 @@ package gcp
 import (
 	"context"
 	"fmt"
-	"github.com/googleapis/gax-go/v2"
 	"strconv"
 	"strings"
+
+	"github.com/googleapis/gax-go/v2"
 
 	"google.golang.org/api/iterator"
 
 	"cloud.google.com/go/compute/apiv1/computepb"
 	"cloud.google.com/go/container/apiv1/containerpb"
+
 	"github.com/elastic/assetbeat/input/internal"
 	stateless "github.com/elastic/beats/v7/filebeat/input/v2/input-stateless"
 	"github.com/elastic/elastic-agent-libs/logp"
@@ -47,6 +49,7 @@ type containerCluster struct {
 	NodePools []*containerpb.NodePool
 	Labels    map[string]string
 	Metadata  mapstr.M
+	Name      string
 }
 
 func collectGKEAssets(ctx context.Context, cfg config, vpcAssetCache *freelru.LRU[string, *vpc], computeAssetCache *freelru.LRU[string, *computeInstance], log *logp.Logger, listInstanceClient listInstanceAPIClient, listClusterClient listClustersAPIClient, publisher stateless.Publisher) error {
@@ -77,7 +80,7 @@ func collectGKEAssets(ctx context.Context, cfg config, vpcAssetCache *freelru.LR
 			children = append(children, "host:"+instance)
 		}
 
-		internal.Publish(publisher, nil,
+		options := []internal.AssetOption{
 			internal.WithAssetCloudProvider("gcp"),
 			internal.WithAssetRegion(cluster.Region),
 			internal.WithAssetAccountID(cluster.Account),
@@ -87,7 +90,12 @@ func collectGKEAssets(ctx context.Context, cfg config, vpcAssetCache *freelru.LR
 			internal.WithAssetChildren(children),
 			WithAssetLabels(internal.ToMapstr(cluster.Labels)),
 			internal.WithAssetMetadata(cluster.Metadata),
-		)
+		}
+
+		if cluster.Name != "" {
+			options = append(options, internal.WithAssetName(cluster.Name))
+		}
+		internal.Publish(publisher, nil, options...)
 	}
 
 	return nil
@@ -177,6 +185,7 @@ func getAllGKEClusters(ctx context.Context, cfg config, client listClustersAPICl
 					Metadata: mapstr.M{
 						"state": c.Status.String(),
 					},
+					Name: c.Name,
 				})
 			}
 		}

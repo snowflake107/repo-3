@@ -19,8 +19,9 @@ package gcp
 
 import (
 	"context"
-	"github.com/googleapis/gax-go/v2"
 	"strconv"
+
+	"github.com/googleapis/gax-go/v2"
 
 	compute "cloud.google.com/go/compute/apiv1"
 	"cloud.google.com/go/compute/apiv1/computepb"
@@ -49,6 +50,7 @@ type computeInstance struct {
 	Labels   map[string]string
 	Metadata mapstr.M
 	RawMd    *computepb.Metadata
+	Name     string
 }
 
 func collectComputeAssets(ctx context.Context, cfg config, subnetAssetCache *freelru.LRU[string, *subnet], computeAssetCache *freelru.LRU[string, *computeInstance], client listInstanceAPIClient, publisher stateless.Publisher, log *logp.Logger) error {
@@ -69,7 +71,7 @@ func collectComputeAssets(ctx context.Context, cfg config, subnetAssetCache *fre
 				parents = append(parents, "network:"+vpc)
 			}
 		}
-		internal.Publish(publisher, nil,
+		options := []internal.AssetOption{
 			internal.WithAssetCloudProvider("gcp"),
 			internal.WithAssetRegion(instance.Region),
 			internal.WithAssetAccountID(instance.Account),
@@ -78,7 +80,12 @@ func collectComputeAssets(ctx context.Context, cfg config, subnetAssetCache *fre
 			internal.WithAssetParents(parents),
 			WithAssetLabels(internal.ToMapstr(instance.Labels)),
 			internal.WithAssetMetadata(instance.Metadata),
-		)
+		}
+
+		if instance.Name != "" {
+			options = append(options, internal.WithAssetName(instance.Name))
+		}
+		internal.Publish(publisher, nil, options...)
 	}
 
 	return nil
@@ -118,6 +125,7 @@ func getAllComputeInstances(ctx context.Context, cfg config, subnetAssetCache *f
 							"state": *i.Status,
 						},
 						RawMd: i.GetMetadata(),
+						Name:  i.GetName(),
 					}
 					selfLink := *i.SelfLink
 					computeAssetCache.AddWithExpire(selfLink, &cI, cfg.Period*2)
