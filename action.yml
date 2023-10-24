@@ -48,7 +48,7 @@ runs:
         echo ${{ steps.clifus.outputs }}
         VAR=$(echo "${{ inputs.SOURCE }}" | tr 'a-z' 'A-Z' | tr '-' '_')
         echo $VAR
-        VERSION=$(echo ${{ toJSON(steps.clifus.outputs) }}|jq ".${VAR}")
+        VERSION=$(echo '${{ toJSON(steps.clifus.outputs) }}'|jq ".${VAR}")
         echo $VERSION
         echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
