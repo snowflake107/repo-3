@@ -1,0 +1,72 @@
+name: "Clifus"
+description: "Run Clifus, create a pull request and report"
+author: "Mergify"
+inputs:
+  NAME:
+    required: true
+    description: "The Clifus source fancy name"
+  SOURCE:
+    required: true
+    description: "The Clifus source"
+  AUTHOR:
+    required: false
+    description: "The Clifus pull request author"
+    default: "mergify-ci-bot <mergify-ci-bot@users.noreply.github.com>"
+  GITHUB_TOKEN:
+    required: true
+    description: "GitHub Token"
+  SLACK_WEBHOOK_URL:
+    required: true
+    description: "Slack notification"
+  CLIFUS_CONFIGURATION:
+    required: false
+    description: Clifus configuration file
+    default: ".github/clifus.yml"
+
+runs:
+  using: "composite"
+  steps:
+    - run: pip install PyYAML
+
+    - name: Run Clifus
+      id: clifus
+      run: |
+        python ./clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}"
+
+    - name: Get version
+      id: version
+      run: |
+        VAR=$(echo "${{ inputs.SOURCE }}" | tr 'a-z' 'A-Z' | tr '-' '_')
+        VERSION=$(echo ${{ steps.version.outputs }}|jq ".${VAR}")
+        echo "VERSION=$VERSION"
+
+    - name: Create the Pull Request
+      id: cpr
+      # yamllint disable-line rule:line-length
+      # nosemgrep: yaml.github-actions.security.third-party-action-not-pinned-to-commit-sha.third-party-action-not-pinned-to-commit-sha
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ inputs.GITHUB_TOKEN }}
+        author: ${{ inputs.AUTHOR }}
+        title: "chore: bump ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}"
+        commit-message: "chore: bump ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}"
+        # yamllint disable-line rule:line-length
+        body: This is an automated bump of ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}
+        branch: clifus/${{ inputs.SOURCE }}-upgrade
+        base: main
+        labels: |
+          dependencies
+
+    - name: Check outputs
+      run: |
+        echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+        echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+
+    - name: Report Status
+      if: failure()
+      # yamllint disable-line rule:line-length
+      # nosemgrep: yaml.github-actions.security.third-party-action-not-pinned-to-commit-sha.third-party-action-not-pinned-to-commit-sha
+      uses: Mergifyio/gha-slack-notification@main
+      with:
+        message: "Clifus: ${{ inputs.SOURCE }} version bump"
+        SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
