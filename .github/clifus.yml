@@ -12,6 +12,6 @@ targets:
     kind: file
     sourceID: python-version
     spec:
-      file: testing-python-update.txt
+      file: runtime.txt
       forcecreate: true
       content: python-{{ source `python-version` }}
