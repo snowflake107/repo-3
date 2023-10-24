@@ -19,4 +19,4 @@ jobs:
           SOURCE: python-version
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LABELS: python,dependencies
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WORKFLOWS_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WORKFLOWS_TEST_WEBHOOK }}
