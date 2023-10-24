@@ -38,7 +38,7 @@ runs:
       shell: bash
       id: clifus
       run: |
-        python ./clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}"
+        python ${{ github.action_path }}//clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}"
 
     - name: Get version
       id: version
