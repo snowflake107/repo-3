@@ -26,18 +26,22 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: pip install PyYAML
+    - name: Install PyYAML
+      shell: bash
+      run: pip install PyYAML
 
     - name: Run Clifus
+      shell: bash
       id: clifus
       run: |
         python ./clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}"
 
     - name: Get version
       id: version
+      shell: bash
       run: |
         VAR=$(echo "${{ inputs.SOURCE }}" | tr 'a-z' 'A-Z' | tr '-' '_')
-        VERSION=$(echo ${{ steps.version.outputs }}|jq ".${VAR}")
+        VERSION=$(echo ${{ steps.clifus.outputs }}|jq ".${VAR}")
         echo "VERSION=$VERSION"
 
     - name: Create the Pull Request
