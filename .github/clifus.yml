@@ -1,0 +1,17 @@
+sources:
+  python-version:
+    name: Get latest Python version from Docker Hub
+    kind: shell
+    spec:
+      command: python3 .github/get-latest-python-version.py
+
+targets:
+  # PYTHON VERSION
+  heroku_runtime.txt:
+    name: "Testing python version update"
+    kind: file
+    sourceID: python-version
+    spec:
+      file: testing-python-update.txt
+      forcecreate: true
+      content: python-{{ source `python-version` }}

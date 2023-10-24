@@ -1,0 +1,22 @@
+name: Clifus
+permissions: write-all
+
+on:
+  workflow_dispatch:
+
+jobs:
+  python-version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # yamllint disable-line rule:line-length
+      # nosemgrep: yaml.github-actions.security.third-party-action-not-pinned-to-commit-sha.third-party-action-not-pinned-to-commit-sha
+      - uses: Mergifyio/clifus@main
+        with:
+          NAME: Python (NEVER MERGE ME, IT'S FOR TESTING PURPOSE)
+          SOURCE: python-version
+          GITHUB_TOKEN: ${{ secrets.MERGIFY_CI_BOT_PAT }}
+          LABELS: python,dependencies
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WORKFLOWS_WEBHOOK_URL }}
