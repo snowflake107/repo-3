@@ -17,6 +17,6 @@ jobs:
         with:
           NAME: Python (NEVER MERGE ME, IT'S FOR TESTING PURPOSE)
           SOURCE: python-version
-          GITHUB_TOKEN: ${{ secrets.MERGIFY_CI_BOT_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LABELS: python,dependencies
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WORKFLOWS_WEBHOOK_URL }}
