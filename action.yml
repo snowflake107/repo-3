@@ -82,3 +82,4 @@ runs:
       with:
         message: "Clifus: ${{ inputs.SOURCE }} version bump"
         SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
+        OVERRIDE_JOB_STATUS: failure
