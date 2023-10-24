@@ -45,11 +45,8 @@ runs:
       shell: bash
       run: |
         set -xv
-        echo ${{ steps.clifus.outputs }}
         VAR=$(echo "${{ inputs.SOURCE }}" | tr 'a-z' 'A-Z' | tr '-' '_')
-        echo $VAR
-        VERSION=$(echo '${{ toJSON(steps.clifus.outputs) }}'|jq ".${VAR}")
-        echo $VERSION
+        VERSION=$(echo '${{ toJSON(steps.clifus.outputs) }}'|jq -r ".${VAR}")
         echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
     - name: Create the Pull Request
