@@ -22,6 +22,10 @@ inputs:
     required: false
     description: Clifus configuration file
     default: ".github/clifus.yml"
+  LABELS:
+    required: false
+    description: Clifus pull request labels
+    default: dependencies
 
 runs:
   using: "composite"
@@ -58,8 +62,7 @@ runs:
         body: This is an automated bump of ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}
         branch: clifus/${{ inputs.SOURCE }}-upgrade
         base: main
-        labels: |
-          dependencies
+        labels: ${{ inputs.LABELS }}
 
     - name: Check outputs
       shell: bash
