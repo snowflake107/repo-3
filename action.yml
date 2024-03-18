@@ -26,6 +26,9 @@ inputs:
     required: false
     description: Clifus pull request labels
     default: dependencies
+  PUSH_TO_FORK:
+    required: false
+    description: Repository to push the pull request to
 
 runs:
   using: "composite"
@@ -57,6 +60,7 @@ runs:
       with:
         token: ${{ inputs.GITHUB_TOKEN }}
         author: ${{ inputs.AUTHOR }}
+        push-to-fork: ${{ inputs.PUSH_TO_FORK }}
         title: "chore: bump ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}"
         commit-message: "chore: bump ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}"
         # yamllint disable-line rule:line-length
