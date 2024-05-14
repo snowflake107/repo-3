@@ -25,7 +25,6 @@ inputs:
   LABELS:
     required: false
     description: Clifus pull request labels
-    default: dependencies
   PUSH_TO_FORK:
     required: false
     description: Repository to push the pull request to
