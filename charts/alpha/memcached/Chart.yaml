@@ -1,6 +1,6 @@
 apiVersion: v2
-name: redis
-description: A Redis chart that can be used with Palantir FedStart
+name: memcached
+description: A Memcached chart that can be used with Palantir FedStart
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -12,13 +12,13 @@ description: A Redis chart that can be used with Palantir FedStart
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
 
-version: 18.19.2013
+version: 7.4.1101
 
 # Be aware that using helm dependencies has undesirable side affects, where you cannot remove
 # subchart config keys by setting them to null. If this type of configuration override is necessary,
 # comment out the dependencies block below. See the following github issue for more details:
 # https://github.com/helm/helm/issues/9027
 dependencies:
-  - name: redis
-    version: "18.19.2"
-    repository: oci://registry-1.docker.io/bitnamicharts
+- name: memcached
+  version: "7.4.11"
+  repository: oci://registry-1.docker.io/bitnamicharts
