@@ -32,15 +32,18 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install PyYAML
+    - name: Setup python and run clifus
+      id: setup-and-run
       shell: bash
-      run: pip install --user PyYAML
-
-    - name: Run Clifus
-      shell: bash
-      id: clifus
       run: |
-        python ${{ github.action_path }}//clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}"
+        python3 -m venv .venv
+        source .venv/bin/activate
+        python3 -m pip install PyYAML
+
+        CLIFUS_OUTPUT=$(python ${{ github.action_path }}/clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}")
+        echo ${CLIFUS_OUTPUT}
+
+        echo "CLIFUS_OUTPUT=$CLIFUS_OUTPUT" >> "$GITHUB_OUTPUT"
 
     - name: Get version
       id: version
@@ -48,7 +51,7 @@ runs:
       run: |
         set -xv
         VAR=$(echo "${{ inputs.SOURCE }}" | tr 'a-z' 'A-Z' | tr '-' '_')
-        VERSION=$(echo '${{ toJSON(steps.clifus.outputs) }}'|jq -r ".${VAR}")
+        VERSION=$(echo '${{ toJSON(steps.setup-and-run.outputs.CLIFUS_OUTPUT) }}'|jq -r ".${VAR}")
         echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
     - name: Create the Pull Request
