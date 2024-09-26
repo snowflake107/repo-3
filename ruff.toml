@@ -1,0 +1,42 @@
+line-length = 88
+indent-width = 4
+target-version = "py312"
+
+[lint]
+preview = true
+select = [
+ "E", "W", "F", "I", "A", "B", "Q",
+ "C4", "T10", "ISC", "ICN", "BLE",
+ "G", "RSE", "TID", "TRY", "UP",
+ "RUF", "RET", "DTZ", "TCH", "COM",
+ "PERF", "PT", "PGH", "SIM",
+ "PIE", "YTT", "T20", "ARG", "PTH",
+ "N", "PYI", "FURB", "FBT", "S",
+ "NPY", "FA", "LOG", "SLOT",
+ "PLC", "PLE", "PLR", "PLW",
+]
+
+ignore = [
+    # NOTE: we need print for now, remove it when switching to logger
+    "T201",
+    # ##
+    "S404", "S603",
+    # NOTE: we don't care that much about shadowing Python modules
+    "A004", "A005",
+    # NOTE: contextlib.supress is slower than try-except-pass
+    "SIM105",
+    # NOTE: not compatible with ruff-format
+    "ISC001",
+    # NOTE: line-length
+    "E501",
+    # NOTE: we prefer using exc_info=True
+    "G201", "TRY400",
+    # NOTE: "Unnecessary parentheses on raised exception", this breaks
+    # isinstance on exception
+    "RSE102",
+    # NOTE: No exception with message set via __init__
+    "TRY003", "TRY301",
+    # NOTE: This enforce usage of raise ... from ...
+    "B904",
+]
+

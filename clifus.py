@@ -21,7 +21,7 @@ def file_type(filepath: str) -> pathlib.Path:
     path = pathlib.Path(filepath).expanduser()
     if not path.is_file():
         raise argparse.ArgumentTypeError(
-            f"The specified file path '{filepath}' is invalid"
+            f"The specified file path '{filepath}' is invalid",
         )
     return path
 
@@ -57,6 +57,7 @@ def evaluate_source(source_id: str, source_config: dict[str, typing.Any]) -> str
 
     if source_config["kind"] == "shell":
         command = source_config["spec"]["command"]
+
         # nosemgrep: python.lang.security.audit.dangerous-subprocess-use.dangerous-subprocess-use
         value = subprocess.check_output(
             shlex.split(command),
@@ -64,11 +65,15 @@ def evaluate_source(source_id: str, source_config: dict[str, typing.Any]) -> str
         )
         value = value.strip()
         print(f"Value of source '{source_id}': {value}")
+
         return value
+
+    raise RuntimeError(f"Source of kind {source_config['kind']} not handled")
 
 
 def get_replacer_value_with_transfomers(
-    source_value: typing.Any, transformers: list[dict[str, typing.Any]]
+    source_value: typing.Any,
+    transformers: list[dict[str, typing.Any]],
 ) -> str:
     """
     Go through all the `transformers` indexes of the target to transform the value
@@ -85,10 +90,9 @@ def get_replacer_value_with_transfomers(
             if s:
                 value = s.group(0)
                 break
-            else:
-                print_to_err_and_exit(
-                    f"Regex for `find` transformer \"{transformer_dict['find']}\" could not be matched with value \"{source_value}\""
-                )
+            print_to_err_and_exit(
+                f'Regex for `find` transformer "{transformer_dict['find']}" could not be matched with value "{source_value}"',
+            )
     else:
         value = source_value
 
@@ -116,8 +120,8 @@ def get_content_regexed(source_value: str, string: str) -> str:
     """
     return re.sub(r"{{\s*source `[a-zA-Z\-]+`\s*}}", source_value, string)
 
+
 def execute_github_target(
-    target_name: str,
     target_config: dict,
     source_value: str,
 ) -> None:
@@ -126,15 +130,18 @@ def execute_github_target(
 
     github_env_file = os.environ.get("GITHUB_OUTPUT")
     if github_env_file:
-        with open(github_env_file, "a") as f:
+        with pathlib.Path(github_env_file).open("a", encoding="utf-8") as f:
             f.write(content)
 
     else:
         if os.environ.get("CI"):
-            print_to_err_and_exit("GITHUB_OUTPUT env variable is not set, while running within a CI")
+            print_to_err_and_exit(
+                "GITHUB_OUTPUT env variable is not set, while running within a CI",
+            )
 
         print("* GITHUB_OUTPUT env variable is not set, print envs on stdout")
         sys.stdout.write(content)
+
 
 def execute_file_target(
     target_name: str,
@@ -142,24 +149,31 @@ def execute_file_target(
     source_value: str,
     output_file_path: pathlib.Path,
 ) -> None:
+    if target_config["spec"] not in {"content", "lineMatchPattern"}:
+        print_to_err_and_exit(
+            f"No valid spec type found for target '{target_name}'. Correct values are: 'content', 'lineMatchPattern'.",
+        )
+        return
+
     if "content" in target_config["spec"]:
         value = get_content_regexed(source_value, target_config["spec"]["content"])
         with output_file_path.open("w") as f:
             f.write(value)
-    elif "lineMatchPattern" in target_config["spec"]:
+        return
+
+    if "lineMatchPattern" in target_config["spec"]:
         pattern = target_config["spec"]["lineMatchPattern"]
         transformers = target_config.get("transformers", {})
         replacer_value = get_replacer_value_with_transfomers(source_value, transformers)
 
-        replaceRegexGroup = None
+        replace_regex_group = None
         for dict_ in transformers:
             if "replaceRegexGroup" in dict_:
-                replaceRegexGroup = dict_["replaceRegexGroup"]
-                if replaceRegexGroup <= 0:
+                replace_regex_group = dict_["replaceRegexGroup"]
+                if replace_regex_group <= 0:
                     print_to_err_and_exit(
-                        f"Invalid regex group '{replaceRegexGroup}' in target {target_name}. The regex group must be > 0."
+                        f"Invalid regex group '{replace_regex_group}' in target {target_name}. The regex group must be > 0.",
                     )
-
                 break
 
         with output_file_path.open("r") as f:
@@ -168,27 +182,28 @@ def execute_file_target(
         with output_file_path.open("w") as f:
             for line in file_content:
                 m = re.match(pattern, line)
-                if m:
-                    if replaceRegexGroup:
-                        for idx, group in enumerate(m.groups()):
-                            if idx + 1 == replaceRegexGroup:
-                                f.write(replacer_value)
-                            else:
-                                f.write(group)
-                    else:
-                        f.write(replacer_value)
-                    f.write(os.linesep)
-                else:
+                if not m:
                     f.write(line)
+                    continue
 
-    else:
-        print_to_err_and_exit(
-            f"No valid spec type found for target '{target_name}'. Correct values are: 'content', 'lineMatchPattern'."
-        )
+                if not replace_regex_group:
+                    f.write(replacer_value)
+                    f.write(os.linesep)
+                    continue
+
+                for idx, group in enumerate(m.groups()):
+                    if idx + 1 == replace_regex_group:
+                        f.write(replacer_value)
+                    else:
+                        f.write(group)
+
+                f.write(os.linesep)
 
 
 def execute_target(
-    target_name: str, target_config: dict[str, typing.Any], source_value
+    target_name: str,
+    target_config: dict[str, typing.Any],
+    source_value,
 ) -> None:
     print("=" * 30)
     print(f"Executing target '{target_name}': {target_config['name']}")
@@ -200,7 +215,7 @@ def execute_target(
         files.update(target_config["spec"]["files"])
 
     if target_config["kind"] == "github":
-        execute_github_target(target_name, target_config, source_value)
+        execute_github_target(target_config, source_value)
 
     else:
         if not files:
@@ -215,7 +230,10 @@ def execute_target(
             # file to only have to rewrite the whole file once.
             if target_config["kind"] == "file":
                 execute_file_target(
-                    target_name, target_config, source_value, output_file_path
+                    target_name,
+                    target_config,
+                    source_value,
+                    output_file_path,
                 )
             elif target_config["kind"] == "yaml":
                 # TODO(greesb):
@@ -230,13 +248,13 @@ def execute_target(
 
             else:
                 print_to_err_and_exit(
-                    f"Kind value '{target_config['kind']}' not supported, in target {target_name}"
+                    f"Kind value '{target_config['kind']}' not supported, in target {target_name}",
                 )
 
     print(f"Done executing target {target_name}")
 
 
-if __name__ == "__main__":
+def main() -> None:
     parser = get_parser()
 
     args = parser.parse_args()
@@ -246,17 +264,19 @@ if __name__ == "__main__":
 
     if not len(config.get("sources", {})):
         print_to_err_and_exit("No sources found, please specify at least one.")
+        return
 
     sources_ids = list(config["sources"].keys())
     if args.source is not None and args.source not in sources_ids:
         print_to_err_and_exit(f"Source '{args.source}' does not exist.")
+        return
 
     targets = config.get("targets", {})
     for source_id in sources_ids:
         env_var_name = source_id.upper().replace("-", "_")
         targets[f"gha-env-var-for-{source_id}"] = {
             "name": f"Set GitHub action environment variable {env_var_name}",
-            "kind": "github", 
+            "kind": "github",
             "sourceID": source_id,
             "spec": {"variable": env_var_name},
         }
@@ -267,22 +287,29 @@ if __name__ == "__main__":
         if not source_id:
             if len(sources_ids) > 1:
                 print_to_err_and_exit(
-                    f"Target {target_name} has no sourceID specified yet there are multiple sources to choose from."
+                    f"Target {target_name} has no sourceID specified yet there are multiple sources to choose from.",
                 )
+                return
 
             source_id = sources_ids[0]
+
         elif source_id not in sources_ids:
             print_to_err_and_exit(
-                f"SourceID {source_id}, for target {target_name}, does not exist."
+                f"SourceID {source_id}, for target {target_name}, does not exist.",
             )
+            return
 
         if args.source is not None and source_id != args.source:
             continue
 
-        if source_id not in evaluated_sources.keys():
+        if source_id not in evaluated_sources:
             evaluated_sources[source_id] = evaluate_source(
-                source_id, config["sources"][source_id]
+                source_id,
+                config["sources"][source_id],
             )
 
         execute_target(target_name, target_config, evaluated_sources[source_id])
 
+
+if __name__ == "__main__":
+    main()
