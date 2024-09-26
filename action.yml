@@ -34,7 +34,7 @@ runs:
   steps:
     - name: Install PyYAML
       shell: bash
-      run: pip install PyYAML
+      run: pip install --user PyYAML
 
     - name: Run Clifus
       shell: bash
