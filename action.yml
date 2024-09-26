@@ -32,27 +32,23 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup python and run clifus
-      id: setup-and-run
+    - name: Setup python and run Clifus
+      id: clifus
       shell: bash
       run: |
         python3 -m venv .venv
         source .venv/bin/activate
-        python3 -m pip install PyYAML
+        python3 -m pip install --user PyYAML
 
-        CLIFUS_OUTPUT=$(python ${{ github.action_path }}/clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}")
-        echo ${CLIFUS_OUTPUT}
+        python ${{ github.action_path }}/clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}") > output.txt
 
-        echo "CLIFUS_OUTPUT=$CLIFUS_OUTPUT" >> "$GITHUB_OUTPUT"
-
-    - name: Get version
-      id: version
-      shell: bash
-      run: |
         set -xv
-        VAR=$(echo "${{ inputs.SOURCE }}" | tr 'a-z' 'A-Z' | tr '-' '_')
-        VERSION=$(echo '${{ toJSON(steps.setup-and-run.outputs.CLIFUS_OUTPUT) }}'|jq -r ".${VAR}")
+        cat output.txt
+
+        VERSION=$(cat output.txt | grep "Value of source '${{ inputs.SOURCE }}': " | awk -F ': ' '{print $2}')
         echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+
+        rm output.txt
 
     - name: Create the Pull Request
       id: cpr
@@ -63,10 +59,10 @@ runs:
         token: ${{ inputs.GITHUB_TOKEN }}
         author: ${{ inputs.AUTHOR }}
         push-to-fork: ${{ inputs.PUSH_TO_FORK }}
-        title: "chore: bump ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}"
-        commit-message: "chore: bump ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}"
+        title: "chore: bump ${{ inputs.NAME }} version to ${{ steps.clifus.outputs.VERSION }}"
+        commit-message: "chore: bump ${{ inputs.NAME }} version to ${{ steps.clifus.outputs.VERSION }}"
         # yamllint disable-line rule:line-length
-        body: This is an automated bump of ${{ inputs.NAME }} version to ${{ steps.version.outputs.VERSION }}
+        body: This is an automated bump of ${{ inputs.NAME }} version to ${{ steps.clifus.outputs.VERSION }}
         branch: clifus/${{ inputs.SOURCE }}-upgrade
         base: main
         labels: ${{ inputs.LABELS }}
