@@ -149,7 +149,10 @@ def execute_file_target(
     source_value: str,
     output_file_path: pathlib.Path,
 ) -> None:
-    if target_config["spec"] not in {"content", "lineMatchPattern"}:
+    if (
+        "content" not in target_config["spec"]
+        and "lineMatchPattern" not in target_config["spec"]
+    ):
         print_to_err_and_exit(
             f"No valid spec type found for target '{target_name}'. Correct values are: 'content', 'lineMatchPattern'.",
         )
