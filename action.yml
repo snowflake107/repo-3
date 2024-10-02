@@ -39,7 +39,7 @@ runs:
         TMPDIR: ${{ runner.temp }}
       run: |
         python3 -m venv $TMPDIR/.venv
-        source $TMPDIR.venv/bin/activate
+        source $TMPDIR/.venv/bin/activate
         python3 -m pip install -r ${{ github.action_path }}/requirements.txt
 
         python ${{ github.action_path }}/clifus.py -c "${{ inputs.CLIFUS_CONFIGURATION }}" -s "${{ inputs.SOURCE }}" > output.txt
