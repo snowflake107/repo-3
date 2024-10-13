@@ -251,7 +251,7 @@ jobs:
     - continue-on-error: true
       id: generate-application-token
       name: Generate GitHub application token
-      uses: peter-murray/workflow-application-token-action@dc0413987a085fa17d19df9e47d4677cf81ffef3
+      uses: peter-murray/workflow-application-token-action@baa1ef2638c3d9e5967b7c8b86219f8fc919e1bb
       with:
         application_id: ${{ secrets.REVIEWER_APPLICATION_ID }}
         application_private_key: ${{ secrets.REVIEWER_APPLICATION_PRIVATE_KEY }}
