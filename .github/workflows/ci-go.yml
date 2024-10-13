@@ -516,7 +516,7 @@ jobs:
       with:
         go-version-file: go.mod
     - continue-on-error: true
-      uses: hashicorp/setup-terraform@a1502cd9e758c50496cc9ac5308c4843bcd56d36
+      uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd
       with:
         terraform_version: ${{ matrix.terraform }}
         terraform_wrapper: false
@@ -792,7 +792,7 @@ jobs:
       with:
         go-version-file: go.mod
     - continue-on-error: true
-      uses: hashicorp/setup-terraform@a1502cd9e758c50496cc9ac5308c4843bcd56d36
+      uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd
       with:
         terraform_version: ${{ matrix.terraform }}
         terraform_wrapper: false
