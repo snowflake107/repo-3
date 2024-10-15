@@ -249,7 +249,7 @@ jobs:
       with:
         fetch-depth: 0
     - continue-on-error: true
-      uses: gradle/wrapper-validation-action@v1
+      uses: gradle/wrapper-validation-action@v3
     - continue-on-error: true
       name: Set up JDK
       uses: actions/setup-java@v3
