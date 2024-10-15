@@ -256,7 +256,7 @@ jobs:
         username: ${{ github.repository_owner }}
     - continue-on-error: true
       name: Build and push
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         push: ${{ github.event_name != 'pull_request' }}
         tags: ghcr.io/cosmos/cosmos-db/build-test:latest
