@@ -38,7 +38,7 @@ subtle-encoding = "0.5.1"
 sha2 = "0.10.1"
 crossbeam-channel = "0.5.2"
 prost = { version = "0.9", default-features = false }
-prost-types = { version = "0.9", default-features = false }
+prost-types = { version = "0.12", default-features = false }
 semver = "1.0.4"
 flex-error = "0.4.4"
 
