@@ -545,7 +545,7 @@ jobs:
         node-version: 18.x
     - continue-on-error: true
       name: Download build artifacts
-      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
       with:
         name: build-artifact
         path: dist
@@ -846,7 +846,7 @@ jobs:
         go-version: ^1.16.0
     - continue-on-error: true
       name: Download build artifacts
-      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
       with:
         name: build-artifact
         path: dist
@@ -1149,7 +1149,7 @@ jobs:
         node-version: 18.x
     - continue-on-error: true
       name: Download build artifacts
-      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
       with:
         name: build-artifact
         path: dist
@@ -1450,7 +1450,7 @@ jobs:
         node-version: 18.x
     - continue-on-error: true
       name: Download build artifacts
-      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
       with:
         name: build-artifact
         path: dist
@@ -1751,7 +1751,7 @@ jobs:
         dotnet-version: 3.x
     - continue-on-error: true
       name: Download build artifacts
-      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
       with:
         name: build-artifact
         path: dist
@@ -2077,7 +2077,7 @@ jobs:
         python-version: 3.x
     - continue-on-error: true
       name: Download build artifacts
-      uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a
+      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
       with:
         name: build-artifact
         path: dist
