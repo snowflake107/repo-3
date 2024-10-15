@@ -270,7 +270,7 @@ jobs:
     - continue-on-error: true
       id: meta
       name: Extract metadata
-      uses: docker/metadata-action@v4
+      uses: docker/metadata-action@v5
       with:
         images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME
           }}
