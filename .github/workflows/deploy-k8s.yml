@@ -272,7 +272,7 @@ jobs:
         '
     - continue-on-error: true
       name: app-env
-      uses: azure/k8s-create-secret@v4
+      uses: azure/k8s-create-secret@v5
       with:
         arguments: --from-literal=APP_ID=${{ secrets.APP_ID }} --from-literal=PRIVATE_KEY=${{
           secrets.PRIVATE_KEY }} --from-literal=WEBHOOK_SECRET=${{ secrets.WEBHOOK_SECRET
@@ -283,7 +283,7 @@ jobs:
     - continue-on-error: true
       id: create-secret
       name: Set imagePullSecret
-      uses: azure/k8s-create-secret@v4
+      uses: azure/k8s-create-secret@v5
       with:
         container-registry-password: ${{ secrets.DOCKER_PASSWORD }}
         container-registry-url: ${{env.IMAGE_REGISTRY_URL}}
