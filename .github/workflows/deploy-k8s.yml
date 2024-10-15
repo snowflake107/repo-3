@@ -262,7 +262,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
     - continue-on-error: true
       id: login
-      uses: azure/aks-set-context@v3
+      uses: azure/aks-set-context@v4
       with:
         cluster-name: ${{env.AZURE_AKS_CLUSTER}}
         resource-group: ${{env.AZURE_RESOURCE_GROUP}}
