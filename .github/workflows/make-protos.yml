@@ -251,7 +251,7 @@ jobs:
         version: 23.x
     - continue-on-error: true
       name: Install Go
-      uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe
+      uses: actions/setup-go@0a12ed9d6a96ab950c8f026ed9f722fe0da7ef32
       with:
         go-version: 1.20.x
     - continue-on-error: true
