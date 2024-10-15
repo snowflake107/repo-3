@@ -59,7 +59,7 @@ signal-hook = "0.3.13"
 version = "=0.23.5"
 
 [dependencies.tendermint]
-version = "=0.23.5"
+version = "=0.39.1"
 features = ["secp256k1"]
 
 [dependencies.tendermint-rpc]
