@@ -533,7 +533,7 @@ jobs:
       with:
         submodules: true
     - continue-on-error: true
-      uses: isbang/compose-action@802a148945af6399a338c7906c267331b39a71af
+      uses: isbang/compose-action@f1ca7fefe3627c2dab0ae1db43a106d82740245e
       with:
         cwd: ./dial-cookbook/ci
         up-flags: --abort-on-container-exit --exit-code-from test --timeout 300
@@ -787,7 +787,7 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
     - continue-on-error: true
-      uses: isbang/compose-action@802a148945af6399a338c7906c267331b39a71af
+      uses: isbang/compose-action@f1ca7fefe3627c2dab0ae1db43a106d82740245e
       with:
         cwd: ./dial-docker-compose/ci/addon
         up-flags: --abort-on-container-exit --exit-code-from test --timeout 300
@@ -1041,7 +1041,7 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
     - continue-on-error: true
-      uses: isbang/compose-action@802a148945af6399a338c7906c267331b39a71af
+      uses: isbang/compose-action@f1ca7fefe3627c2dab0ae1db43a106d82740245e
       with:
         cwd: ./dial-docker-compose/ci/application
         up-flags: --abort-on-container-exit --exit-code-from test --timeout 300
@@ -1296,7 +1296,7 @@ jobs:
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
     - continue-on-error: true
       name: Run quickstart model example
-      uses: isbang/compose-action@802a148945af6399a338c7906c267331b39a71af
+      uses: isbang/compose-action@f1ca7fefe3627c2dab0ae1db43a106d82740245e
       with:
         cwd: ./dial-docker-compose/ci/model
         up-flags: --abort-on-container-exit --exit-code-from test --timeout 300
@@ -1550,7 +1550,7 @@ jobs:
     - continue-on-error: true
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
     - continue-on-error: true
-      uses: isbang/compose-action@802a148945af6399a338c7906c267331b39a71af
+      uses: isbang/compose-action@f1ca7fefe3627c2dab0ae1db43a106d82740245e
       with:
         cwd: ./dial-docker-compose/ci/ollama
         up-flags: --abort-on-container-exit --exit-code-from test --timeout 300
