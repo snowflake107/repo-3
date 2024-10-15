@@ -22,7 +22,7 @@ path = "src/lib.rs"
 all-features = true
 
 [dependencies]
-prost = "0.9"
+prost = "0.13"
 prost-types = "0.9"
 bytes = "1.1"
 tonic = "0.6"
