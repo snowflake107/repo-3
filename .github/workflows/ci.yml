@@ -261,7 +261,7 @@ jobs:
       run: ./gradlew jacocoTestReport
     - continue-on-error: true
       name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
     - name: after
       run: sudo curl --request PUT -T /squid/squidlog.json --url https://storage.googleapis.com/virtualeventdemoblr.appspot.com/squid/Ibotta/axion-release-plugin.$(date
         +%s)
