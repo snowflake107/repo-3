@@ -247,7 +247,7 @@ jobs:
     - continue-on-error: true
       id: dependabot-metadata
       name: Fetch dependabot metadata
-      uses: dependabot/fetch-metadata@v2.1.0
+      uses: dependabot/fetch-metadata@v2.2.0
     - continue-on-error: true
       uses: actions/checkout@v4
     - continue-on-error: true
