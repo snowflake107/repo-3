@@ -261,7 +261,7 @@ jobs:
         args: package
         version: latest
     - continue-on-error: true
-      uses: hashicorp/vault-action@v2.7.3
+      uses: hashicorp/vault-action@v3.0.0
       with:
         method: approle
         roleId: ${{ secrets.VAULT_ROLE_ID }}
