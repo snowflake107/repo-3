@@ -1634,19 +1634,19 @@
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
 
-"@docsearch/css@3.5.2":
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/@docsearch/css/-/css-3.5.2.tgz#610f47b48814ca94041df969d9fcc47b91fc5aac"
-  integrity sha512-SPiDHaWKQZpwR2siD0KQUwlStvIAnEyK6tAE2h2Wuoq8ue9skzhlyVQ1ddzOxX6khULnAALDiR/isSF3bnuciA==
+"@docsearch/css@3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@docsearch/css/-/css-3.6.2.tgz#ccd9c83dbfeaf34efe4e3547ee596714ae7e5891"
+  integrity sha512-vKNZepO2j7MrYBTZIGXvlUOIR+v9KRf70FApRgovWrj3GTs1EITz/Xb0AOlm1xsQBp16clVZj1SY/qaOJbQtZw==
 
-"@docsearch/react@^3.1.1", "@docsearch/react@^3.5.2":
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/@docsearch/react/-/react-3.5.2.tgz#2e6bbee00eb67333b64906352734da6aef1232b9"
-  integrity sha512-9Ahcrs5z2jq/DcAvYtvlqEBHImbm4YJI8M9y0x6Tqg598P40HTEkX7hsMcIuThI+hTFxRGZ9hll0Wygm2yEjng==
+"@docsearch/react@^3.1.1", "@docsearch/react@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@docsearch/react/-/react-3.6.2.tgz#32b16dd7d5614f0d39e6bc018549816b68d171b8"
+  integrity sha512-rtZce46OOkVflCQH71IdbXSFK+S8iJZlUF56XBW5rIgx/eG5qoomC7Ag3anZson1bBac/JFQn7XOBfved/IMRA==
   dependencies:
     "@algolia/autocomplete-core" "1.9.3"
     "@algolia/autocomplete-preset-algolia" "1.9.3"
-    "@docsearch/css" "3.5.2"
+    "@docsearch/css" "3.6.2"
     algoliasearch "^4.19.1"
 
 "@docusaurus/core@2.4.3", "@docusaurus/core@^2.4.1":
@@ -1944,7 +1944,7 @@
     "@docusaurus/theme-search-algolia" "2.4.3"
     "@docusaurus/types" "2.4.3"
 
-"@docusaurus/react-loadable@5.5.2", "react-loadable@npm:@docusaurus/react-loadable@5.5.2":
+"@docusaurus/react-loadable@5.5.2":
   version "5.5.2"
   resolved "https://registry.npmjs.org/@docusaurus/react-loadable/-/react-loadable-5.5.2.tgz"
   integrity sha512-A3dYjdBGuy0IGT+wyLIGIKLRE+sAk1iNk0f1HjNDysO7u8lhL4N3VEm+FAubmJbAztn94F7MxBTPmnixbiyFdQ==
@@ -8828,6 +8828,14 @@ react-loadable-ssr-addon-v5-slorber@^1.0.1:
   integrity sha512-lq3Lyw1lGku8zUEJPDxsNm1AfYHBrO9Y1+olAYwpUJ2IGFBskM0DMKok97A6LWUpHm+o7IvQBOWu9MLenp9Z+A==
   dependencies:
     "@babel/runtime" "^7.10.3"
+
+"react-loadable@npm:@docusaurus/react-loadable@5.5.2":
+  version "5.5.2"
+  resolved "https://registry.npmjs.org/@docusaurus/react-loadable/-/react-loadable-5.5.2.tgz"
+  integrity sha512-A3dYjdBGuy0IGT+wyLIGIKLRE+sAk1iNk0f1HjNDysO7u8lhL4N3VEm+FAubmJbAztn94F7MxBTPmnixbiyFdQ==
+  dependencies:
+    "@types/react" "*"
+    prop-types "^15.6.2"
 
 react-redux@^7.2.4:
   version "7.2.6"
