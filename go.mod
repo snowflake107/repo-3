@@ -19,9 +19,8 @@ require (
 	github.com/docker/go-units v0.4.0
 	github.com/evanphx/json-patch v4.9.0+incompatible
 	github.com/gobwas/glob v0.2.3
-	github.com/gofrs/flock v0.8.0
+	github.com/gofrs/flock v0.12.1
 	github.com/gosuri/uitable v0.0.4
-	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.8.0
 	github.com/mattn/go-shellwords v1.0.10
@@ -33,7 +32,7 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.9.0
 	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	k8s.io/api v0.19.2
