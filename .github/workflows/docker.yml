@@ -275,7 +275,7 @@ jobs:
         url: ${{ secrets.VAULT_ADDR }}
     - continue-on-error: true
       name: Log in to the Container registry
-      uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
+      uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
       with:
         password: ${{ env.DOCKER_PASSWORD }}
         registry: ${{ env.DOCKER_REGISTRY }}
