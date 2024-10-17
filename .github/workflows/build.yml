@@ -276,7 +276,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       name: Release
-      uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
+      uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191
       with:
         files: specs.zip
         tag_name: ${{ steps.tag_version.outputs.new_tag }}
