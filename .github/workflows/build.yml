@@ -267,7 +267,7 @@ jobs:
     - continue-on-error: true
       id: tag_version
       name: Bump version and push tag
-      uses: mathieudutour/github-tag-action@v6.1
+      uses: mathieudutour/github-tag-action@v6.2
       with:
         default_bump: minor
         github_token: ${{ secrets.GITHUB_TOKEN }}
