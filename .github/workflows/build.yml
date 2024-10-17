@@ -289,7 +289,7 @@ jobs:
         skip-tag: 'true'
     - continue-on-error: true
       name: Publish to npm
-      uses: JS-DevTools/npm-publish@v1
+      uses: JS-DevTools/npm-publish@v3
       with:
         access: public
         token: ${{ secrets.NPM_PUBLISH_TOKEN }}
