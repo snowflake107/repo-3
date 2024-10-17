@@ -15,7 +15,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.16.2
 	github.com/bitfinexcom/bitfinex-api-go v0.0.0-20210608095005-9e0b26f200fb
 	github.com/bradleyfalzon/ghinstallation/v2 v2.0.4
-	github.com/denisbrodbeck/machineid v1.0.1
 	github.com/envoyproxy/protoc-gen-validate v0.6.7
 	github.com/fatih/color v1.13.0
 	github.com/felixge/fgprof v0.9.2
@@ -43,7 +42,7 @@ require (
 	golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
-	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	golang.org/x/sync v0.8.0
 	google.golang.org/genproto v0.0.0-20220222213610-43724f9ea8cf
 	google.golang.org/protobuf v1.28.0
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
