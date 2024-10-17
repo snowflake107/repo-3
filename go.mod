@@ -15,7 +15,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.16.2
 	github.com/bitfinexcom/bitfinex-api-go v0.0.0-20210608095005-9e0b26f200fb
 	github.com/bradleyfalzon/ghinstallation/v2 v2.0.4
-	github.com/denisbrodbeck/machineid v1.0.1
 	github.com/envoyproxy/protoc-gen-validate v0.6.7
 	github.com/fatih/color v1.13.0
 	github.com/felixge/fgprof v0.9.2
@@ -35,7 +34,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/razorpay/razorpay-go v0.0.0-20210728161131-0341409a6ab2
 	github.com/rs/zerolog v1.26.1
-	github.com/sergi/go-diff v1.2.0
+	github.com/sergi/go-diff v1.3.1
 	github.com/sirupsen/logrus v1.8.1
 	github.com/tailscale/depaware v0.0.0-20210622194025-720c4b409502
 	github.com/xanzy/go-gitlab v0.60.0
